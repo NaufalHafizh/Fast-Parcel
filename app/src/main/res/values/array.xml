@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="kategori_list">
+        <item>Dokumen</item>
+        <item>Barang</item>
+        <item>Hewan</item>
+    </string-array>
+</resources>
