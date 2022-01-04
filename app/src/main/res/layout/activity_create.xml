@@ -17,24 +17,9 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/ID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ID" />
-
-            <EditText
-                android:id="@+id/IDinput"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ID"
-                android:layout_marginTop="4dp"
-                android:ems="18" />
-
-            <TextView
                 android:id="@+id/Title1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/IDinput"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:gravity="center_vertical"
@@ -143,27 +128,11 @@
                 android:layout_marginTop="4dp"
                 android:ems="18" />
 
-            <TextView
-                android:id="@+id/Status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/Kategori_input"
-                android:layout_marginTop="4dp"
-                android:text="Status" />
-
-            <EditText
-                android:id="@+id/Status_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/Status"
-                android:layout_marginTop="4dp"
-                android:ems="18" />
-
             <Button
                 android:id="@+id/Simpan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/Status_input"
+                android:layout_below="@id/Kategori_input"
                 android:layout_marginTop="30dp"
                 android:text="Kirim" />
 

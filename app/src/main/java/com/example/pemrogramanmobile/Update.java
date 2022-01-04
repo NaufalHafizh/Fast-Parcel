@@ -13,6 +13,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Update extends AppCompatActivity {
 
     protected Cursor cursor;
@@ -38,54 +49,64 @@ public class Update extends AppCompatActivity {
         update = (Button) findViewById(R.id.Ubah);
         back = (Button) findViewById(R.id.backUP);
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM pengiriman WHERE ID = '"+getIntent().getStringExtra("ID") +"'", null);
-        cursor.moveToFirst();
-        if (cursor.getCount() > 0){
-
-            cursor.moveToPosition(0);
-            text1.setText(cursor.getString(0).toString());
-            text2.setText(cursor.getString(1).toString());
-            text3.setText(cursor.getString(2).toString());
-            text4.setText(cursor.getString(3).toString());
-            text5.setText(cursor.getString(4).toString());
-            text6.setText(cursor.getString(5).toString());
-            text7.setText(cursor.getString(6).toString());
-
-        }
+        // Mengambil data dari Intent
+        text1.setText(getIntent().getStringExtra("ID"));
+        text2.setText(getIntent().getStringExtra("nama_pengirim"));
+        text3.setText(getIntent().getStringExtra("alamat_pengirim"));
+        text4.setText(getIntent().getStringExtra("nama_penerima"));
+        text5.setText(getIntent().getStringExtra("alamat_penerima"));
+        text6.setText(getIntent().getStringExtra("kategori"));
+        text7.setText(getIntent().getStringExtra("status"));
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-//                nama_pengirim, alamat_pengirim, nama_penerima, alamat_penerima, kategori, status
-                db.execSQL("update pengiriman set nama_pengirim='"+
-                        text2.getText().toString() +"', " + "alamat_pengirim='" +
-                        text3.getText().toString()+"', " + "nama_penerima='"+
-                        text4.getText().toString() +"', " + "alamat_penerima='" +
-                        text5.getText().toString() +"', " + "kategori='" +
-                        text6.getText().toString() +"', " + "status='" +
-                        text7.getText().toString() + "' where ID='" + text1.getText().toString()+"'");
-                Toast.makeText(getApplicationContext(), "Berhasil", Toast.LENGTH_LONG).show();
-//                Home.ma.RefreshGrid();
-                finish();
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+                editData();
             }
         });
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the main; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu); return true;
+    public void editData(){
 
+        String url = "http://192.168.1.14/Android/updateData.php";
+
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+//                        finish();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> form = new HashMap<>();
+                form.put("ID", getIntent().getStringExtra("ID"));
+                form.put("nama_pengirim", text2.getText().toString());
+                form.put("alamat_pengirim", text3.getText().toString());
+                form.put("nama_penerima", text4.getText().toString());
+                form.put("alamat_penerima", text5.getText().toString());
+                form.put("kategori", text6.getText().toString());
+                form.put("status", text7.getText().toString());
+                return form;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 }

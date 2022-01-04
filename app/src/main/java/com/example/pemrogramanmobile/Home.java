@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -135,6 +136,13 @@ public class Home extends AppCompatActivity{
 
     }
 
+    @Override
+    protected void onResume() {
+
+        ambil_data();
+        super.onResume();
+    }
+
     public void logout(){
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -172,13 +180,13 @@ public class Home extends AppCompatActivity{
 
     public void setNewparcel() {
 
-        Intent setNew = new Intent(this, Create.class);
+        Intent setNew = new Intent(getApplicationContext(), Create.class);
         startActivity(setNew);
     }
 
     public void ambil_data(){
 
-        String link = "http://192.168.1.16/Android/readData.php";
+        String link = "http://192.168.1.14/Android/readData.php";
         StringRequest repon = new StringRequest(
 
                 Request.Method.POST,
@@ -224,16 +232,51 @@ public class Home extends AppCompatActivity{
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                    Intent menampilkanData = new Intent(getApplicationContext(), Detail.class);
+                                    final get_data section = list_data.get(position);
+                                    final CharSequence[] dialogitem = {"Detail", "Update", "Delete"};
+                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Home.this);
+                                    builder1.setTitle("Menu");
+                                    builder1.setItems(dialogitem, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
 
-                                    menampilkanData.putExtra("ID", list_data.get(position).getID());
-                                    menampilkanData.putExtra("nama_pengirim", list_data.get(position).getNama_pengirim());
-                                    menampilkanData.putExtra("alamat_pengirim", list_data.get(position).getNama_pengirim());
-                                    menampilkanData.putExtra("nama_penerima", list_data.get(position).getNama_penerima());
-                                    menampilkanData.putExtra("alamat_penerima", list_data.get(position).getAlamat_penerima());
-                                    menampilkanData.putExtra("kategori", list_data.get(position).getKategori());
-                                    menampilkanData.putExtra("status", list_data.get(position).getStatus());
-                                    startActivity(menampilkanData);
+                                            switch(which){
+
+                                                case 0 :
+                                                    Intent menampilkanData = new Intent(getApplicationContext(), Detail.class);
+
+                                                    menampilkanData.putExtra("ID", list_data.get(position).getID());
+                                                    menampilkanData.putExtra("nama_pengirim", list_data.get(position).getNama_pengirim());
+                                                    menampilkanData.putExtra("alamat_pengirim", list_data.get(position).getAlamat_pengirim());
+                                                    menampilkanData.putExtra("nama_penerima", list_data.get(position).getNama_penerima());
+                                                    menampilkanData.putExtra("alamat_penerima", list_data.get(position).getAlamat_penerima());
+                                                    menampilkanData.putExtra("kategori", list_data.get(position).getKategori());
+                                                    menampilkanData.putExtra("status", list_data.get(position).getStatus());
+                                                    startActivity(menampilkanData);
+                                                    break;
+
+                                                case 1 :
+
+                                                    Intent editdata = new Intent(getApplicationContext(), Update.class);
+
+                                                    editdata.putExtra("ID", list_data.get(position).getID());
+                                                    editdata.putExtra("nama_pengirim", list_data.get(position).getNama_pengirim());
+                                                    editdata.putExtra("alamat_pengirim", list_data.get(position).getNama_pengirim());
+                                                    editdata.putExtra("nama_penerima", list_data.get(position).getNama_penerima());
+                                                    editdata.putExtra("alamat_penerima", list_data.get(position).getAlamat_penerima());
+                                                    editdata.putExtra("kategori", list_data.get(position).getKategori());
+                                                    editdata.putExtra("status", list_data.get(position).getStatus());
+                                                    startActivity(editdata);
+
+                                                    break;
+
+                                                case 2 :
+                                                    break;
+
+                                            }
+                                        }
+                                    });
+                                    builder1.create().show();
                                 }
                             });
 
@@ -241,7 +284,7 @@ public class Home extends AppCompatActivity{
                             e.printStackTrace();
                         }
 
-                        Toast.makeText(Home.this, response, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Home.this, response, Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {

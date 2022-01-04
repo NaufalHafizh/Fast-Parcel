@@ -1,27 +1,33 @@
 package com.example.pemrogramanmobile;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Detail extends AppCompatActivity {
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class Detail extends AppCompatActivity{
 
     protected Cursor cursor;
     DataHelper dbHelper;
-    Button back2;
+    Button back2, pantau;
     TextView text1, text2, text3, text4, text5, text6, text7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
-        dbHelper = new DataHelper(this);
 
         text1 = findViewById(R.id.IDlihat);
         text2 = findViewById(R.id.nama_pengirimLiat);
@@ -32,6 +38,7 @@ public class Detail extends AppCompatActivity {
         text7 = findViewById(R.id.statusLiat);
 
         back2 = findViewById(R.id.back2);
+        pantau = findViewById(R.id.pantau);
 
         // Mengambil data dari Intent
         text1.setText(getIntent().getStringExtra("ID"));
@@ -50,6 +57,17 @@ public class Detail extends AppCompatActivity {
             }
         });
 
+        pantau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jumptolokasi();
+            }
+        });
+    }
 
+    public void jumptolokasi(){
+
+        Intent pantau = new Intent(this, Petalokasi.class);
+        startActivity(pantau);
     }
 }
