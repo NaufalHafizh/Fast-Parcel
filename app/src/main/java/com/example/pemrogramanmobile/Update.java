@@ -62,6 +62,14 @@ public class Update extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editData();
+                finish();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -69,7 +77,7 @@ public class Update extends AppCompatActivity {
 
     public void editData(){
 
-        String url = "http://192.168.1.14/Android/updateData.php";
+        String url = "http://192.168.1.17/Android/updateData.php";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

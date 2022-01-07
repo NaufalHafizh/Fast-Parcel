@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="#E9FDFF"
     tools:context=".Detail">
 
     <ScrollView
@@ -190,16 +191,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/statusLiat"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/index_radius"
+                android:padding="12dp"
                 android:text="Back" />
 
             <Button
                 android:id="@+id/pantau"
+                android:padding="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/back2"
                 android:layout_marginLeft="196dp"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/index_radius"
                 android:text="Pantau Paket" />
         </RelativeLayout>
     </ScrollView>

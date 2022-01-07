@@ -182,9 +182,35 @@ public class Home extends AppCompatActivity{
         startActivity(setNew);
     }
 
+    void hapus_date(String ID){
+
+        String url = "http://192.168.1.17/Android/deleteData.php?ID=" + ID;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+        );
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
+    }
+
     public void ambil_data(){
 
-        String link = "http://192.168.1.14/Android/readData.php";
+        String link = "http://192.168.1.17/Android/readData.php";
         StringRequest repon = new StringRequest(
 
                 Request.Method.POST,
@@ -269,6 +295,7 @@ public class Home extends AppCompatActivity{
                                                     break;
 
                                                 case 2 :
+                                                    hapus_date(list_data.get(position).getID());
                                                     break;
 
                                             }
@@ -298,61 +325,6 @@ public class Home extends AppCompatActivity{
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(repon);
     }
-
-//    public void RefreshGrid(){
-//
-//        SQLiteDatabase db = dbcenter.getReadableDatabase();
-//        cursor = db.rawQuery("SELECT * FROM pengiriman", null);
-//        list = new String[cursor.getCount()];
-//        cursor.moveToFirst();
-//        for (int i = 0; i < cursor.getCount(); i++){
-//            cursor.moveToPosition(i);
-//            list[i] = cursor.getString(0).toString();
-//        }
-//
-//        gridView = (GridView) findViewById(R.id.gridView);
-//        gridView.setAdapter(new ArrayAdapter<>(this, R.layout.gridview_item, list));
-//        gridView.setSelected(true);
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                final String section = list[position];
-//                final CharSequence[] dialogitem = {"Detail", "Update", "Delete"};
-//                AlertDialog.Builder builder1 = new AlertDialog.Builder(Home.this);
-//                builder1.setTitle("Menu");
-//                builder1.setItems(dialogitem, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        switch(which){
-//
-//                            case 0 :
-//                                Intent det = new Intent(getApplicationContext(), Detail.class);
-//                                det.putExtra("ID", section);
-//                                startActivity(det);
-//                                break;
-//
-//                            case 1 :
-//                                Intent up = new Intent(getApplicationContext(), Update.class);
-//                                up.putExtra("ID", section);
-//                                startActivity(up);
-//                                break;
-//
-//                            case 2 :
-//                                SQLiteDatabase db = dbcenter.getReadableDatabase();
-//                                db.execSQL("DELETE FROM pengiriman WHERE ID = '"+section+"'");
-//                                RefreshGrid();
-//                                break;
-//
-//                        }
-//                    }
-//                });
-//                builder1.create().show();
-//            }
-//        });
-//        ((ArrayAdapter)gridView.getAdapter()).notifyDataSetInvalidated();
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

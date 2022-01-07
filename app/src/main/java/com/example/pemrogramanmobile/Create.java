@@ -48,7 +48,7 @@ public class Create extends AppCompatActivity {
         text6 = findViewById(R.id.Kategori_input);
 
         kirim = findViewById(R.id.Simpan);
-        close = findViewById(R.id.back);
+        close = findViewById(R.id.kembali_create);
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(
                 Create.this,
@@ -62,22 +62,23 @@ public class Create extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addData();
+                finish();
             }
         });
 
-//        close.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
     }
 
     public void addData(){
 
-        String url = "http://192.168.1.14/Android/createData.php";
+        String url = "http://192.168.1.17/Android/createData.php";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="#E9FDFF"
     tools:context=".Update">
     <ScrollView
         android:layout_width="fill_parent"
@@ -159,6 +160,7 @@
 
             <Button
                 android:id="@+id/Ubah"
+                android:background="@drawable/index_radius"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/Status_ubah"
@@ -167,10 +169,11 @@
 
             <Button
                 android:id="@+id/backUP"
+                android:background="@drawable/index_radius"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/Ubah"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="280dp"
                 android:text="Back" />
 
         </RelativeLayout>
