@@ -89,8 +89,6 @@ public class Home extends AppCompatActivity{
                             }
                         })
                         .show();
-
-
             }
         });
 
@@ -212,7 +210,6 @@ public class Home extends AppCompatActivity{
 
         String link = "http://192.168.1.17/Android/readData.php";
         StringRequest repon = new StringRequest(
-
                 Request.Method.POST,
                 link,
                 new Response.Listener<String>() {
